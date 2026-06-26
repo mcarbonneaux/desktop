@@ -36,7 +36,7 @@ jobs:
       # actions/upload-artifact doesn't need contents: write
       contents: read
     strategy:
-        fail-fast: true
+        fail-fast: false
         matrix:
             include:
             - target: windows-cl-msvc2022-x86_64
@@ -88,11 +88,6 @@ jobs:
         path: |
           ~/ccache
         key: ${{ runner.os }}-${{ matrix.target }}
-
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
 
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1

@@ -57,6 +57,7 @@ jobs:
       CRAFT_TARGET: ${{ matrix.target }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CRAFT_PACKAGE_SYMBOLS: ${{  github.event_name != 'pull_request' }}
+      PYTHONUNBUFFERED: "1" # <-- Force l'envoi immédiat de tous les logs à GitHub
 
     container: ${{ matrix.container }}
 
@@ -100,7 +101,7 @@ jobs:
             Write-Host "Purge complète de l'ancien dossier Craft persistant pour éviter les conflits..."
             Remove-Item -Recurse -Force "${env:USERPROFILE}\craft" -ErrorAction SilentlyContinue
         }
-            
+
     - name: Clone CraftMaster
       run: |
         git clone --depth=1 https://invent.kde.org/kde/craftmaster.git "${home}/craft/CraftMaster/CraftMaster"

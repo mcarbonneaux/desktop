@@ -88,6 +88,10 @@ jobs:
           ~/ccache
         key: ${{ runner.os }}-${{ matrix.target }}
 
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: amd64 # ou x64
 
     - name: Clone CraftMaster
       run: |
@@ -99,11 +103,6 @@ jobs:
         # disable git's safe.directory
         git config --global --add safe.directory '*'
         & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" --setup
-    
-    - name: Setup MSVC
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: amd64 # ou x64
         
     - name: Craft unshelve
       run: |

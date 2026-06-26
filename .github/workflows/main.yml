@@ -40,7 +40,7 @@ jobs:
         matrix:
             include:
             - target: windows-cl-msvc2022-x86_64
-              os: windows-latest
+              os: windows-2022
               container:
             - target: macos-clang-arm64
               os: macos-latest
@@ -92,7 +92,6 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: amd64
-        toolset: '14.3' # Forcer l'utilisation des outils de build MSVC v143 (qui correspondent à VS 2022)
 
     - name: Clone CraftMaster
       run: |
@@ -197,7 +196,7 @@ jobs:
         & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" -c --no-cache --package opencloud/opencloud-desktop
 
     - name: Package Appx / MSIX
-      if: ${{ matrix.os  == 'windows-latest' && github.event_name != 'pull_request' }}
+      if: ${{ matrix.os  == 'windows-2022' && github.event_name != 'pull_request' }}
       run: |
         & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" -c --no-cache --package --options "[Packager]PackageType=AppxPackager" --options "[Packager]Destination=${{ github.workspace }}/appx/" opencloud/opencloud-desktop
         & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" -c --no-cache --package --options "[Packager]PackageType=MsixPackager" --options "[Packager]Destination=${{ github.workspace }}/msix/" opencloud/opencloud-desktop
@@ -235,14 +234,14 @@ jobs:
         path: ${{ github.workspace }}/binaries/*
 
     - name: Upload appx
-      if: ${{ matrix.os  == 'windows-latest' && github.event_name != 'pull_request' }}
+      if: ${{ matrix.os  == 'windows-2022' && github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.target }}-appx-${{ github.run_number }}
         path: ${{ github.workspace }}/appx/*
 
     - name: Upload msix
-      if: ${{ matrix.os  == 'windows-latest' && github.event_name != 'pull_request' }}
+      if: ${{ matrix.os  == 'windows-2022' && github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.target }}-msix-${{ github.run_number }}

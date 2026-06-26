@@ -111,13 +111,13 @@ jobs:
         New-Item -Path ~/cache -ItemType Directory -ErrorAction SilentlyContinue
         # disable git's safe.directory
         git config --global --add safe.directory '*'
-        & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" --setup
+        & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" --options "dev-utils/kshimgen.useBinary=False" --setup
         
     - name: Craft unshelve
       run: |
-        & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" -c --unshelve "${env:GITHUB_WORKSPACE}/.craft.shelf"
+        & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" --options "dev-utils/kshimgen.useBinary=False" -c --unshelve "${env:GITHUB_WORKSPACE}/.craft.shelf"
         # bootsrtap in case the shelf was empty
-        & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" -c craft
+        & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" --options "dev-utils/kshimgen.useBinary=False" -c craft
         # ccache
         if (-not $IsWindows) {
           & "${env:GITHUB_WORKSPACE}/.github/workflows/.craft.ps1" -c dev-utils/ccache

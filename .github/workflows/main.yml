@@ -91,7 +91,8 @@ jobs:
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
       with:
-        arch: amd64 # ou x64
+        arch: amd64
+        toolset: '14.3' # Forcer l'utilisation des outils de build MSVC v143 (qui correspondent à VS 2022)
 
     - name: Clone CraftMaster
       run: |
